@@ -1,6 +1,6 @@
 const parser = require('./parser.js');
 const readlineSync = require('readline-sync');
-List_question = new parser();
+List_question = parser();
 
 // fonction qui permet à l'enseignant de rechercher une question ou la choisir dans une liste de questions
 function searchQuestion(){

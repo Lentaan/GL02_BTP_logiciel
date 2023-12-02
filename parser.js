@@ -1,11 +1,11 @@
-const fs = require('fs');
-const QUESTION = require('./QUESTION');
-//const giftData = fs.readFileSync('./sujetB_data/EM-U4-p32_33-Review.gift', 'utf-8');
-const giftData2 = fs.readFileSync('./sujetB_data/EM-U5-p34-Gra-Expressions_of_quantity.gift', 'utf-8');
 //const giftData3 = fs.readFileSync('./sujetB_data/EM-U4-p32_33-Review.gift', 'utf-8');
 //const giftData4 = fs.readFileSync('./sujetB_data/EM-U5-p34-Voc.gift', 'utf-8');
 
-const parser = function(gift){
+const parser = function(){
+    const fs = require('fs');
+    const QUESTION = require('./QUESTION');
+    //const giftData = fs.readFileSync('./sujetB_data/EM-U4-p32_33-Review.gift', 'utf-8');
+    const gift = fs.readFileSync('./sujetB_data/EM-U5-p34-Gra-Expressions_of_quantity.gift', 'utf-8');
     //================etape de tokenisation==================
     // Un fichier gift est sous la forme gift = *element\n
     //je recupere donc chaque element
@@ -47,7 +47,7 @@ const parser = function(gift){
         }
         
     });
-    console.log(objetQuestion);
     return objetQuestion;
 }
-parser(giftData2);
+
+module.exports = parser;

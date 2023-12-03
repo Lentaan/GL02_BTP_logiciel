@@ -1,5 +1,6 @@
 const parser = require('./parser.js');
 const readlineSync = require('readline-sync');
+const fs = require('fs');
 List_question = parser();
 
 // fonction qui retourne une question à partir de ce qu'a saisi l'enseignant
@@ -42,4 +43,20 @@ const listQuestionExam = function(){
     } while(insert.toLowerCase() == 'oui');
     // on retourne la liste de questions
     return questions_exam;
+}
+
+// fonction va créer une fiche d'examen sous format GIFT
+const createExamSheet = function(){
+    // message de bienvenu rappelant le but de la fonctionnalité
+    console.log('Bienvenu dans la création d\'une fiche d\'examen sous format GIFT \n');
+    // récupération de la liste des questions
+    questions = listQuestionExam();
+    // création d'une chaine de caractères qui va contenir toutes les questions
+    let giftContent = '';
+    // ajout de toutes les questions en respectant la grammaire régulière
+    questions.forEach(q => {
+        giftContent += `::${q}\n\n`
+    });
+    // on crée le fichier gift
+    fs.writeFileSync('exam.gift',giftContent);
 }

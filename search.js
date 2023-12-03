@@ -2,8 +2,8 @@ const parser = require('./parser.js');
 const readlineSync = require('readline-sync');
 List_question = parser();
 
-// fonction qui permet à l'enseignant de rechercher une question ou la choisir dans une liste de questions
-function searchQuestion(){
+//===================fonction qui permet à l'enseignant de rechercher une question ou la choisir dans une liste de questions=======================
+const searchQuestion = function(){
     // récupération de la question saisie par l'enseignant sur le terminal à l'aide de la fonction question de la bibliothèque readline-sync
     let question = readlineSync.question('Entrez votre question : ');
     // variable booléenne qui va nous permettre de savoir si la question a été trouvée ou non
@@ -24,3 +24,6 @@ function searchQuestion(){
         console.log(`La question ${question} n'a pas été trouvée`);
     }
 }
+
+// exportation de la fonction searchQuestion
+module.exports = searchQuestion;

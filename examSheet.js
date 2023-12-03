@@ -60,3 +60,5 @@ const createExamSheet = function(){
     // on crée le fichier gift
     fs.writeFileSync('exam.gift',giftContent);
 }
+
+module.exports = {search, listQuestionExam, createExamSheet};

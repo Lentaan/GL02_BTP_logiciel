@@ -14,16 +14,16 @@ List_examen = parser();
 
 //visualize
    command('Visualize','Visualize by a graph the types of questions contain in all dates or in examen')
-  .argument('<file>', 'choose un fichier examen ou tous')
+  .argument('<file>', 'choose un fichier examen ou toutes les données')
 //// fonction qui permet à un enseignant de visualiser les types de questions présentes dans un examen ou sur toutes les données///
     const visualizeTypesQuestions = function(examen, all){
  
   //recupération de la décision de l'enseignant : un examen (donc il faut en selectionner un ou toutes les données)
-      let choose= ;
+      
 
       let i = 0;
   // si choix de l'examen: demander d'entrer le nom de l'examen
-        if()
+        if(examen)
           while (i<List_examen.length && //select === examen//
         ){
           let chooseexamen = readlineSync.QUESTION ('Entrez le nom de l examen :');

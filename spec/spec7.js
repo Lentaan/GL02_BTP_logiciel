@@ -1,17 +1,17 @@
 const parser = require('../parser.js');
 const readlineSync = require('readline-sync');
+const parserExam = require()
 list_question = parser();
 //const fs = require('fs');
-
+exam1 = parserExam('../exam1.gift')
+exam2 = parserExam('../exam2.gift')
 
 
 
 // Fonction pour comparer les questions de deux examens
-function compareExams(exam1Questions, exam2Questions) {
+function compareExams(exam1, exam2) {
     // Comparaison basique : vérification des questions identiques
-    const commonQuestions = exam1Questions.filter(question =>
-        exam2Questions.includes(question)
-    );
+    const commonQuestions = exam1Questions.filter(question => exam2Questions.includes(question));
     return commonQuestions;
 }
 

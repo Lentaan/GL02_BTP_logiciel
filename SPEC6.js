@@ -5,45 +5,57 @@
 //Use of English, Adverb, Ultimate, Future Forms, Progress test, Relatives clauses.
 
 //  rewiev a l'air de contenir les reponses
-const data = require('./data');
+const vegalite = require ('vega-lite');
 const parser = require('./parser');
 const readlineSync = ('readline-sync');
-//const select = (examen);
-List_examen = parser();
+const parserExam = ('./parserExamen');
+List_examen = parserExam();
 
 
 //visualize
-   command('Visualize','Visualize by a graph the types of questions contain in all dates or in examen')
-  .argument('<file>', 'choose un fichier examen ou toutes les données')
+   command('VisualizeExam','Visualize by a graph the types of questions contain in examen')
+  .argument('<file>', 'choisir un fichier examen')
+  
 //// fonction qui permet à un enseignant de visualiser les types de questions présentes dans un examen ou sur toutes les données///
-    const visualizeTypesQuestions = function(examen, all){
+    const VisualizeExam = function(){
  
   //recupération de la décision de l'enseignant : un examen (donc il faut en selectionner un ou toutes les données)
-      
+      let chooseexamen = readlineSync.QUESTION ('Entrez le nom de l examen :');
+  // boucle pour parcourir les noms d'examen
 
       let i = 0;
   // si choix de l'examen: demander d'entrer le nom de l'examen
-        if(examen)
-          while (i<List_examen.length && //select === examen//
-        ){
-          let chooseexamen = readlineSync.QUESTION ('Entrez le nom de l examen :');
-          let nomexamenexiste = true;
+        
+      while (i<List_examen.length ){
+          
+        let nomExamenExiste = true;}
       //afficher les types de questions de l'examen selectionnée et affiche avec vega
-          if(nomexamenexiste) {
-            var 
+          if(nomExamenExiste) {
+            var visualizeTypesQuestions = {
+              "data" : {"url" : "examen1.gift" },
+              "mark" : "bar",
+              "encoding" : { x : {"field" : "Types de questions", "type" : "nominal"},
+                            y : {"aggragate": "count"},
+
+              }
+                        
+            }
         
             // si pas trouvé le dossier
           }else{
         console.log('Réessaye');
           }
      // si choix des types de questions de toutes les données alors il faut les afficher avec vega
-      }else{
-        var visualizeTypesQuestions =
-        "data" : {"url" : "U11-p114-Mixed_conditionals.gift", "U10-p106-Reading.gift", "U9-p95-Third_cond-4.gift","U9-p94-Listening.gift","U8-p84-Voc-Linking_words.gift", "U7-p77-It is,there is.gift","U7-p77-6.gift","U7-p76_77-So,such,too,enough.gift","U7-p76-Relative_clauses.gift"},
-        "mark" : "bar",
-        "encoding" : { x : { "field" : "Types de questions", "type" : "nominal"}
-                      y : {"aggregate" : "count"}
+      command('Visualize all data', 'Vizualise by graph the types of questions in all the datas ')
+      .argument ('<file>', 'All files')
+          const VisualiseAllData = function() {
+            var visualizeTypesQuestions ={
+             "data" : {"url": "EM-U4-p32_33-Review.gift"}, 
+              "mark" : "bar",
+              "encoding" : { x : { "field" : "Types de questions", "type" : "nominal"},
+                             y : {"aggregate" : "count"}}}
 
-    }}
+    } 
+  }
 
 module.exports = visualizeTypesQuestions;

@@ -3,16 +3,8 @@ const readlineSync = require('readline-sync');
 list_question = parser();
 //const fs = require('fs');
 
-// Fonction pour extraire les questions d'un fichier GIFT
-function extractQuestions(giftContent) {
-    const questions = giftContent.split('::'); // Diviser les questions
-    const formattedQuestions = questions.map(question => {
-        // Ici, vous pouvez analyser chaque question pour extraire les informations nécessaires
-        // Par exemple, séparer la question, les options de réponse, etc.
-        return question.trim(); // À adapter selon la structure du fichier GIFT
-    });
-    return formattedQuestions.filter(question => question !== ''); // Filtrer les éléments vides
-}
+
+
 
 // Fonction pour comparer les questions de deux examens
 function compareExams(exam1Questions, exam2Questions) {

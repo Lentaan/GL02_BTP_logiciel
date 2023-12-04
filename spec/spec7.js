@@ -1,4 +1,7 @@
-const fs = require('fs');
+const parser = require('../parser.js');
+const readlineSync = require('readline-sync');
+list_question = parser();
+//const fs = require('fs');
 
 // Fonction pour extraire les questions d'un fichier GIFT
 function extractQuestions(giftContent) {

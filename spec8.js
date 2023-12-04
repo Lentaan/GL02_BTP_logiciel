@@ -1,4 +1,4 @@
-const parser = require('../parser.js');
+const parser = require('./parser.js');
 const readlineSync = require('readline-sync');
 list_question = parser();
 

@@ -2,7 +2,7 @@
 const parserExam = function(cheminFichier){
     //import de l'ensemble des fichiers contenant les questions
     const fs = require('fs');
-    const QUESTION = require('./QUESTION');
+    const QUESTION = require('./QUESTION.js');
     const gift = fs.readFileSync(cheminFichier, 'utf-8');
     
     //================etape de tokenisation==================

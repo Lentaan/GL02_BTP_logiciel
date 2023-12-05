@@ -1,5 +1,8 @@
 const parser = require('./parser.js');//parser pour tous les exams
 const parserExam = require('./parserExam.js');//parser pour lire 1 seul examen
+const cheminFichier = './SujetB_data/EM-U6-p46_47-4.gift';
+const exam3 = parserExam(cheminFichier);
+console.log(exam3);
 /*const readline= require('readline');
 
 const rl = readline.createInterface({
@@ -13,7 +16,8 @@ list_question = parser();
 exam1 = parserExam('./exam1.gift');
 exam2 = parserExam('./exam2.gift');
 
-console.log(exam1);
+//console.log(list_question);
+console.log(exam2);
 
 
 /*

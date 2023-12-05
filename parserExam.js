@@ -39,5 +39,6 @@ const parserExam = function(cheminFichier){
         
     });
     return objetQuestion;
+
 }
 module.exports = parserExam;

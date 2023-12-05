@@ -6,8 +6,10 @@
 
 //  rewiev a l'air de contenir les reponses
 const vegalite = require ('vega-lite');
+const vega = require ('vega');
 const parser = require('./parser');
-const readlineSync = ('readline');
+const QUESTION = require('./QUESTION');
+const readline = ('readline');
 const parserExam = ('./parserExamen');
 List_examen = parserExam();
 
@@ -16,46 +18,75 @@ List_examen = parserExam();
    command('VisualizeExam','Visualize by a graph the types of questions contain in examen')
   .argument('<file>', 'choisir un fichier examen')
   
-//// fonction qui permet à un enseignant de visualiser les types de questions présentes dans un examen ou sur toutes les données///
+//// fonction qui permet à un enseignant de visualiser les types de questions présentes dans un examen 
     const VisualizeExam = function(){
  
-  //recupération de la décision de l'enseignant : un examen (donc il faut en selectionner un ou toutes les données)
+  //demander à l'enseignant d'ecrire le nom de l'examen dont il veut voir les types de questions
       let chooseexamen = readline.QUESTION ('Entrez le nom de l examen :');
-  // boucle pour parcourir les noms d'examen
 
+    // boucle pour parcourir tous les noms d'examen
       let i = 0;
-  // si choix de l'examen: demander d'entrer le nom de l'examen
-        
-      while (i<List_examen.length ){
-          
-        let nomExamenExiste = true;}
+
+      //variable qui verifie si le nom de l'examen existe ou pas 
+      let nomExamenExiste = true;
+
+      // le while va servir à parcourir tous les noms d'examen 
+      while (i<List_examen.length && nomExamenExiste ){  
+
       //afficher les types de questions de l'examen selectionnée et affiche avec vega
-          if(nomExamenExiste) {
+          if(List_examen[i].name.includes(QUESTION)) {
             var visualizeTypesQuestions = {
               "data" : {"url" : "examen1.gift" },
               "mark" : "bar",
-              "encoding" : { x : {"field" : "Types de questions", "type" : "nominal"},
-                            y : {"aggragate": "count"},
+              "encoding" : { x : {"field" : "name", "type" : "nominal",
+                                            "axis" : { "title" : "Types de questions ' name."}
+                                          },
+                            y : {"field" : "Nombre de questions","type" : "quantitative"}
 
               }
                         
-            }
+            } 
         
             // si pas trouvé le dossier
           }else{
         console.log('Réessaye');
-          }
+          }}
+  
      // si choix des types de questions de toutes les données alors il faut les afficher avec vega
       command('Visualize all data', 'Vizualise by graph the types of questions in all the datas ')
       .argument ('<file>', 'All files')
           const VisualiseAllData = function() {
-            var visualizeTypesQuestions ={
-             "data" : {"url": "EM-U4-p32_33-Review.gift"}, 
-              "mark" : "bar",
-              "encoding" : { x : { "field" : "Types de questions", "type" : "nominal"},
-                             y : {"aggregate" : "count"}}}
+            const urls = ['EM-U4-p32_33-Review.gitf', 'EM-U5-p34-Gra-Expressions_of_quantity.gift', 'EM-U5-p34-Voc.gift','EM-U5-p35-Gra-Subject_verb_agreement.gift'];
 
-    } 
+            // Fonction pour charger les données depuis une URL
+              const fetchData = async (url) => {
+                 const response = await fetch(url);
+                 const data = await response.json();
+                   return data;
+                    };
+
+          // Charger les données depuis chaque URL
+          const dataPromises = urls.map(url => fetchData(url));
+
+          // Attendre que toutes les promesses soient résolues
+          Promise.all(dataPromises)
+          .then(datasets => {
+         // Combinez les jeux de données si nécessaire
+          const combinedData = datasets.reduce((acc, dataset) => acc.concat(dataset), []);
+
+            var visualizeTypesQuestions ={
+             "data" : {"values": combinedData}, 
+              "mark" : "bar",
+              "encoding" : { x : { "field" : "name", "type" : "nominal", 
+                                    "axis": {"title": "Types de questions ' name."}
+                                  },
+                             y : {"field" : "Nombre de questions","type" : "quantitative"}
+                            }
+                          }
+            visualizeTypesQuestions.render()
+
+    })
   }
+}
 
 module.exports = visualizeTypesQuestions;

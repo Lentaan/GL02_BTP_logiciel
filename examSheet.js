@@ -89,12 +89,12 @@ const createExamSheet = function () {
   let giftContent = "";
   // ajout de chaque question à la chaine de caractères
   questions.forEach((q) => {
-    giftContent += `::${q}\n\n`;
+    giftContent += `${q}\n\n`;
   });
   // on demande à l'enseignant de saisir le nom du fichier
   let fileName = readlineSync.question("Entrez le nom du fichier : ");
   // on crée le fichier gift
-  fs.writeFileSync("exam.gift", giftContent);
+  fs.writeFileSync(`${fileName}.gift`, giftContent);
 };
 
 module.exports = { search, listQuestionExam, createExamSheet };

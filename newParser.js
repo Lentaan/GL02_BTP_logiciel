@@ -1,4 +1,4 @@
-const parserExam = function(cheminFichier){
+const newParser = function(cheminFichier = '.exam1.gift'){
     const fs = require('fs');
     const QUESTION = require('./QUESTION.js');
     const gift = fs.readFileSync(cheminFichier, 'utf-8');
@@ -6,23 +6,25 @@ const parserExam = function(cheminFichier){
     let elements = gift.split(/\n+/);
     let objetQuestion = [];
 
-    let questions = elements.filter(element => element.slice(0,2) === '::');
+    let questions = elements.filter(element => element.startsWith('::'));
 
-    let parsedQuestion = questions.filter(question => question.match(/(.+{.+}.+)/));
+    questions.forEach(question => {
+        let questionText = '';
+        let answers = [];
 
-    parsedQuestion.forEach(question => {
-        let matched = question.match(/(.+{.+}.+)/);
-        if(matched){
-            let questionPart = matched[1].split('{');
-            let questionText = questionPart[0].trim();
-            let answerPart = questionPart[1].split('}');
-            let answers = answerPart[0].split('=').map(ans => ans.trim());
-            let q = new QUESTION(questionText, ...answers);
-            objetQuestion.push(q);
+        let matched = question.match(/(.+?)(\{.+?\})?$/);
+        if (matched) {
+            questionText = matched[1].trim();
+            if (matched[2]) {
+                answers = matched[2].slice(1, -1).split('=').map(ans => ans.trim());
+            }
         }
+
+        let q = new QUESTION(questionText, ...answers);
+        objetQuestion.push(q);
     });
 
     return objetQuestion;
 }
 
-module.exports = parserExam;
+module.exports = newParser;

@@ -50,9 +50,11 @@ List_examen = parserExam();
             // si pas trouvé le dossier
           }else{
         console.log('Réessaye');
+        //renvoyer l'utilisateur 
           }}
   
      // si choix des types de questions de toutes les données alors il faut les afficher avec vega
+     //Visualizealldata
       command('Visualize all data', 'Vizualise by graph the types of questions in all the datas ')
       .argument ('<file>', 'All files')
           const VisualiseAllData = function() {
@@ -65,11 +67,11 @@ List_examen = parserExam();
                    return data;
                     };
 
-          // Charger les données depuis chaque URL
-          const dataPromises = urls.map(url => fetchData(url));
+            // Charger les données depuis chaque URL
+            const dataPromises = urls.map(url => fetchData(url));
 
-          // Attendre que toutes les promesses soient résolues
-          Promise.all(dataPromises)
+           // Attendre que toutes les promesses soient résolues
+           Promise.all(dataPromises)
           .then(datasets => {
          // Combinez les jeux de données si nécessaire
           const combinedData = datasets.reduce((acc, dataset) => acc.concat(dataset), []);
@@ -83,7 +85,7 @@ List_examen = parserExam();
                              y : {"field" : "Nombre de questions","type" : "quantitative"}
                             }
                           }
-            visualizeTypesQuestions.render()
+            
 
     })
   }

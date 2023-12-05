@@ -8,12 +8,14 @@
   const parser = require('./parser');
   const parserExam = require ('./parserExam');
   List_examen = parserExam();
+  //on integre une fonction qui nous indique le chemin vers un nouveau fichier 
+  const cheminNouveauFichierReponses = 'nouveaufichier.gift' //peut-etre en txt?
 
-
+  // cette fonction nous dit ce qu'il y a dans le nouveau fichier 
+  const contenuNouveauFichierReponses = 'Contenu du nouveau fichier de réponses.\n'
 //insert
-  .command("insert", "Insert a file of answer")
+  command("insert", "Insert a file of answer")
   .argument('<new file>', 'rentrer un fichier GIFT avec des réponses uniquement')
    
-    const insert = function(){
-      let insertcopie = readline.
-    }
+    
+    

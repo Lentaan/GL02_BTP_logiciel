@@ -87,10 +87,12 @@ const createExamSheet = function () {
   questions = listQuestionExam();
   // création d'une chaine de caractères qui va contenir toutes les questions
   let giftContent = "";
-  // ajout de toutes les questions en respectant la grammaire régulière
+  // ajout de chaque question à la chaine de caractères
   questions.forEach((q) => {
     giftContent += `::${q}\n\n`;
   });
+  // on demande à l'enseignant de saisir le nom du fichier
+  let fileName = readlineSync.question("Entrez le nom du fichier : ");
   // on crée le fichier gift
   fs.writeFileSync("exam.gift", giftContent);
 };

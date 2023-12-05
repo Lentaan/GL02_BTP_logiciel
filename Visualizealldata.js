@@ -2,7 +2,7 @@ const vegalite = require ('vega-lite');
 const vega = require ('vega');
 const QUESTION = require('./QUESTION');
 const readlineSync = ('readline-sync');
-const parserExam = ('./parserExamen');
+const parserExam = ('./parserExamen.js');
 
 
 

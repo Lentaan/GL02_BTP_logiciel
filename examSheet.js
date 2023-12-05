@@ -47,7 +47,7 @@ const listQuestionExam = function () {
     if (question != null) {
       // on demande à l'enseignant s'il veut ajouter la question trouvée
       keepIt = readlineSync.question(
-        `Voulez-vous ajouter ${question} (oui/non) : `
+        `Voulez-vous ajouter ${question} \n (oui/non) : `
       );
 
       // si oui, on l'ajoute à la liste

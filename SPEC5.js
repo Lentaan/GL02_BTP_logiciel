@@ -15,5 +15,5 @@
   .argument('<new file>', 'rentrer un fichier GIFT avec des réponses uniquement')
    
     const insert = function(){
-      
+      let insertcopie = readline.
     }

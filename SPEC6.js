@@ -7,7 +7,7 @@
 //  rewiev a l'air de contenir les reponses
 const vegalite = require ('vega-lite');
 const parser = require('./parser');
-const readlineSync = ('readline-sync');
+const readlineSync = ('readline');
 const parserExam = ('./parserExamen');
 List_examen = parserExam();
 
@@ -20,7 +20,7 @@ List_examen = parserExam();
     const VisualizeExam = function(){
  
   //recupération de la décision de l'enseignant : un examen (donc il faut en selectionner un ou toutes les données)
-      let chooseexamen = readlineSync.QUESTION ('Entrez le nom de l examen :');
+      let chooseexamen = readline.QUESTION ('Entrez le nom de l examen :');
   // boucle pour parcourir les noms d'examen
 
       let i = 0;

@@ -1,7 +1,6 @@
 const vegalite = require ('vega-lite');
 const vega = require ('vega');
 const QUESTION = require('./QUESTION');
-const readlineSync = require('readline-sync');
 const parser = require('./parser.js');
 const parserExam = require('./parserExam.js');
 const programme = require('@caporal/core').default;
@@ -36,10 +35,10 @@ programme
         var visualizeTypesQuestions ={
             "data" : {"values": combinedData}, 
             "mark" : "bar",
-            "encoding" : { x : { "field" : "name", "type" : "nominal", 
+            "encoding" : { x : { "field" : "type", "type" : "nominal", 
                                 "axis": {"title": "Types de questions ' type."}
                                 },
-                        y : {"field" : "Nombre de questions","type" : "quantitative"}
+                        y : {"field" : "Nombre de questions","aggregate" : "count"}
                             }
                             }})
     })

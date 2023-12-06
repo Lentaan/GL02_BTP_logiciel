@@ -2,7 +2,7 @@
 //C'est pour l'enseignant
 //centrées sur les questions 
 //identifier les types de questions: Listening, READING, grammaire, vocabulaire, 
-//Use of English, Adverb, Ultimate, Future Forms, Progress test, Relatives clauses.
+
 
 //  rewiev a l'air de contenir les reponses
 const vegalite = require ('vega-lite');

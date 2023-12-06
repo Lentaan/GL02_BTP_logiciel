@@ -9,13 +9,16 @@ const vegalite = require ('vega-lite');
 const vega = require ('vega');
 const QUESTION = require('./QUESTION');
 const readlineSync = ('readline-sync');
-const parserExam = ('./parserExamen.js');
+const parserExam = require('./parserExam.js');
 List_examen = parserExam();
+const caporal = ('@caporal/core').default;
 //createExamenSheet
 
   
 //// fonction qui permet à un enseignant de visualiser les types de questions présentes dans un examen 
-const VisualizeExam = function(){
+programme
+.command('VisualizeExam', 'Visualize by a graph types of questions of one exam')
+.action(  function(){
  
   //demander à l'enseignant d'ecrire le nom de l'examen dont il veut voir les types de questions
       let chooseexamen = readlineSync.QUESTION ('Entrez le nom de l examen :');
@@ -30,7 +33,7 @@ const VisualizeExam = function(){
       while (i<List_examen.length && nomExamenExiste ){  
 
       //afficher les types de questions de l'examen selectionnée et affiche avec vega
-          if(List_examen[i].name.includes(QUESTION)) {
+          if(List_examen[i].name.includes(examen)) {
             var visualizeTypesQuestions = {
               "data" : {"url" : "examen1.gift" },
               "mark" : "bar",
@@ -47,8 +50,8 @@ const VisualizeExam = function(){
         console.log('Réessaye');
         return chooseexamen;
         //renvoyer l'utilisateur 
-          }}}
+          }}})
   
      
-
+programme.run(process.argv.slice(2));
 module.exports = VisualizeExam;

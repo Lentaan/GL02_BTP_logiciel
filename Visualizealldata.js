@@ -3,7 +3,9 @@ const vega = require ('vega');
 const QUESTION = require('./QUESTION');
 const readlineSync = require('readline-sync');
 const parser = require('./parser.js');
+const parserExam = require('./parserExam.js');
 const programme = require('@caporal/core').default;
+const fetch = require('fetch');
 
 
 programme
@@ -12,7 +14,7 @@ programme
     // si choix des types de questions de toutes les données alors il faut les afficher avec vega
 
     function() {
-        const urls = ['EM-U4-p32_33-Review.gift', 'EM-U5-p34-Gra-Expressions_of_quantity.gift', 'EM-U5-p34-Voc.gift','EM-U5-p35-Gra-Subject_verb_agreement.gift',''];
+        const urls = ['EM-U5-p34-Gra-Expressions_of_quantity.gift', 'EM-U5-p34-Voc.gift','EM-U5-p35-Gra-Subject_verb_agreement.gift',''];
         
         // Fonction pour charger les données depuis une URL
         const fetchData = async (url) => {
@@ -39,10 +41,7 @@ programme
                                 },
                         y : {"field" : "Nombre de questions","type" : "quantitative"}
                             }
-                            }
-
-
-                        })
+                            }})
     })
  //exportation de la fonction VisualizeAllData
 programme.run(process.argv.slice(2));

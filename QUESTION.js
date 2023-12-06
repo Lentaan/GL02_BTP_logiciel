@@ -1,6 +1,5 @@
 
 var QUESTION = function(nomFichier,nm,ans,type){
-	this.nomFichier = nomFichier;
 	this.name = nm;
 	this.answer = ans;
 	this.type = type;

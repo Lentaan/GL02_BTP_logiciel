@@ -51,7 +51,6 @@ const parser = function(){
             let vocabulary =question.match(/(.*Voc.*)/);
             let reading =question.match(/(.*Reading.*)/);
             if(matched){
-                let nomFichier = path.basename(cheminFichier);
                 let answer = matched[1];
                 let type="reading";
                 if(listening){

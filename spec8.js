@@ -15,12 +15,21 @@ const isValid = function(file) {
         bool = true;
     }
 
-    return bool;
+    const uniqueQuestions = new Set(list);
+    const isUnique = uniqueQuestions.size === list.length;
+
+    if (isUnique) {
+        console.log("Le tableau ne contient que des questions uniques.");
+    } else {
+        console.log("Le tableau contient des doublons de questions.");
+    }
+
+    return bool && isUnique;
 
 }
 
 
-console.log(isValid('SujetB_data/EM-U5-p36_37-Reading.gift'));
+//console.log(isValid('SujetB_data/EM-U5-p36_37-Reading.gift'));
 console.log(isValid('./exam/exam2.gift'));
 
 

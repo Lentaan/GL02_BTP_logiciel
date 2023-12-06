@@ -35,6 +35,18 @@ cli
 			logger.info(`La question ${args.number} a ete ajoutee`);
 		})
 	})
+
+	//specification 5 donner les resultats d'un exam
+	.command('compareAnswer',"compare les reponses d'un etudiant au test avec la correction de l'examen")
+	.argument('<answer>',"Fichier de reponse de l'etudiant")
+	.argument('<exam>',"Fichier de l'exam en question")
+	.action(({args,logger,options}) => {
+		fs.readFile(args.answer,'utf-8',(err,data) => {
+			if(err){
+				logger.info("")
+			}
+		})
+	})
 				
 cli.run(process.argv.slice(2));
 	

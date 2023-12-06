@@ -1,6 +1,7 @@
 const parsfile = require('./parsfile'); //appel du parser
 const fs = require('fs');
 const readlineSync = require('readline-sync');
+const path = require('path');
 
 let exam1;
 let exam2;
@@ -21,7 +22,7 @@ let choix = readlineSync.questionInt('Choisissez un premier fichier en entrant s
 
 // Vérifier si le choix est valide
 if (choix > 0 && choix <= examfile.length) {
-    exam1 = examfile[choix - 1];
+    exam1 = './exam/'+examfile[choix - 1];
     console.log(`Vous avez choisi : ${exam1}\n`);
 
 } else {
@@ -33,7 +34,7 @@ if (choix > 0 && choix <= examfile.length) {
 
 
 // Demander à l'utilisateur de choisir le premier fichier
-choix = readlineSync.questionInt('A quoi souhaitez-vous comparer ce fichier ?\n 1. Vos fichiers personnals \n 2. La base de donnée\n');
+choix = readlineSync.questionInt(`A quoi souhaitez-vous comparer ${exam1} ?\n 1. Vos fichiers personnals \n 2. La base de donnée\n`);
 
 // Vérifier si le choix est valide
 if (choix > 0 && choix <= 2) {
@@ -55,7 +56,7 @@ if(choix === 1){
 
 // Vérifier si le choix est valide
     if (choix > 0 && choix <= examfile.length) {
-        exam2 = examfile[choix - 1];
+        exam2 = './exam/'+examfile[choix - 1];
         console.log(`Vous avez choisi : ${exam1}\n`);
 
     } else {
@@ -76,7 +77,7 @@ if(choix === 1){
 
 // Vérifier si le choix est valide
     if (choix > 0 && choix <= files.length) {
-        exam2 = files[choix - 1];
+        exam2 = './SujetB_data/'+files[choix - 1];
         console.log(`Vous avez choisi : ${exam1}`);
 
     } else {
@@ -85,15 +86,19 @@ if(choix === 1){
 }
 
 //==============================Parser les fichiers=================================//
+/*let dirPath = path.dirname(exam1);
+console.log(dirPath);
+console.log(`./${dirPath}/${exam1}`);*/
+
+
 let questionExam1 = parsfile(exam1);
-//console.log(questionExam1);
+console.log(questionExam1);
 
 let questionExam2 = parsfile(exam2);
-//console.log(questionExam2);
-
+console.log(questionExam2);
 
 //=============================== Comparaison des questions des fichiers==================================//
-questionExam1.forEach((question1) => {
+/*questionExam1.forEach((question1) => {
     const matchedQuestion = questionExam2.find((question2) => {
         return question1.name === question2.name && question1.answer === question2.answer && question1.type === question2.type;
     });
@@ -102,7 +107,7 @@ questionExam1.forEach((question1) => {
         console.log(`La question "${question1.name}" est identique dans les deux examens.`);
     }
 });
-
+*/
 
 
 /*

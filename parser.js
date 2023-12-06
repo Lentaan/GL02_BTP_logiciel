@@ -51,6 +51,7 @@ const parser = function(){
             let vocabulary =question.match(/(.*Voc.*)/);
             let reading =question.match(/(.*Reading.*)/);
             if(matched){
+                let nomFichier = path.basename(cheminFichier);
                 let answer = matched[1];
                 let type="reading";
                 if(listening){
@@ -62,7 +63,7 @@ const parser = function(){
                 }else if(reading){
                      type = "reading"
                 }
-                let q = new QUESTION(question,answer,type);
+                let q = new QUESTION(nomFichier,question,answer,type);
                 objetQuestion.push(q);
             }
             

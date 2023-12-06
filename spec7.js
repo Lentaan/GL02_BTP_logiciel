@@ -1,20 +1,18 @@
-/*const newParser = require('./newParser.js');//parser pour lire 1 seul examen
-const cheminFichier = './exam2.gift';
-const exam3 = newParser(cheminFichier);
-console.log(exam3);*/
-
-//const newParser = require('./newParser');
 const parsfile = require('./parsfile');
-const parser = require('./parser.js');//parser pour tous les exams
+//const parser = require('./parser.js');//parser pour tous les exams
 const fs = require('fs');
 const readlineSync = require('readline-sync');
 
-//les 2 fichiers a comparer
-let exam1;
-let exam2;
+let exam1 = './exam/exam1.gift';
+let exam2 = './exam/exam2.gift';
 
-// Récupérer la liste des fichiers disponibles dans le répertoire
-const files = fs.readdirSync('./SujetB_data'); // Le chemin du répertoire où se trouvent tes fichiers
+
+
+
+
+
+// Récupérer la liste des fichiers disponibles dans le répertoire (inutile)
+/*const files = fs.readdirSync('./SujetB_data'); // Le chemin du répertoire où se trouvent tes fichiers
 
 // Afficher les fichiers disponibles à l'utilisateur
 console.log('Fichiers disponibles :');
@@ -49,20 +47,32 @@ if (choix2 > 0 && choix2 <= files.length) {
 } else {
     console.log('Choix invalide');
 }
+*/
 
-let questionExam1 = parsfile('./SujetB_data/'+exam1);
+
+let questionExam1 = parsfile(exam1);
 console.log(questionExam1);
 
+let questionExam2 = parsfile('./exam/exam2.gift');
+console.log(questionExam2);
+
+// Comparaison des questions
+questionExam1.forEach((question1) => {
+    const matchedQuestion = questionExam2.find((question2) => {
+        return question1.name === question2.name && question1.answer === question2.answer && question1.type === question2.type;
+    });
+
+    if (matchedQuestion) {
+        console.log(`La question "${question1.name}" est identique dans les deux examens.`);
+    }
+});
 
 
 
 /*list_question = parser();
 console.log(exam1);*/
 
-/*function listQuestionsFile (exam){
-    let questionExam = list_question.filter(exam.nomFichier);
-    return questionExam;
-}*/
+
 
 /*function listQuestionsFile(exam) {
     let questionsExam = list_question.filter(question => question.nomFichier === exam);

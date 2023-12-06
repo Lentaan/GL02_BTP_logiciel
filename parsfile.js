@@ -23,7 +23,6 @@ const parsfile = function(file) {
         let reading = question.match(/(.*Reading.*)/);
 
         if(matched){
-            let nomFichier = path.basename(file);
             let answer = matched[1];
             let type = "reading";
 
@@ -37,7 +36,7 @@ const parsfile = function(file) {
                 type = "reading"
             }
 
-            let q = new QUESTION(nomFichier, question, answer, type);
+            let q = new QUESTION(question, answer, type);
             objetQuestion.push(q);
         }
     });

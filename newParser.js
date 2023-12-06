@@ -1,28 +1,32 @@
-const newParser = function(cheminFichier = '.exam1.gift'){
-    const fs = require('fs');
-    const QUESTION = require('./QUESTION.js');
+const QUESTION = require('./QUESTION.js');
+const fs = require('fs');
+
+const newParser = function(cheminFichier) {
     const gift = fs.readFileSync(cheminFichier, 'utf-8');
 
     let elements = gift.split(/\n+/);
     let objetQuestion = [];
 
-    let questions = elements.filter(element => element.startsWith('::'));
+    let currentQuestion = '';
+    let currentAnswers = [];
 
-    questions.forEach(question => {
-        let questionText = '';
-        let answers = [];
-
-        let matched = question.match(/(.+?)(\{.+?\})?$/);
-        if (matched) {
-            questionText = matched[1].trim();
-            if (matched[2]) {
-                answers = matched[2].slice(1, -1).split('=').map(ans => ans.trim());
+    elements.forEach(element => {
+        if (element.startsWith('::')) {
+            if (currentQuestion !== '') {
+                let q = new QUESTION(currentQuestion.trim(), currentAnswers);
+                objetQuestion.push(q);
+                currentAnswers = [];
             }
+            currentQuestion = element;
+        } else if (element.startsWith('{=')) {
+            currentAnswers.push(...element.slice(3, -1).split('=').map(ans => ans.trim()));
         }
-
-        let q = new QUESTION(questionText, ...answers);
-        objetQuestion.push(q);
     });
+
+    if (currentQuestion !== '') {
+        let q = new QUESTION(currentQuestion.trim(), currentAnswers);
+        objetQuestion.push(q);
+    }
 
     return objetQuestion;
 }

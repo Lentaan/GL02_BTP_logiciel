@@ -8,9 +8,13 @@ console.log(exam3);
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
-});*/
+});
 
 list_question = parser();
+
+
+console.log(questions);*/
+
 
 //On recupere les questions des examens
 //exam1 = parserExam('./exam1.gift');

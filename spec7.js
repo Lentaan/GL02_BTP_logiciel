@@ -87,10 +87,6 @@ if(choix === 1){
 }
 
 //==============================Parser les fichiers=================================//
-/*let dirPath = path.dirname(exam1);
-console.log(dirPath);
-console.log(`./${dirPath}/${exam1}`);*/
-
 
 let questionExam1 = parsfile(exam1);
 //console.log(questionExam1);

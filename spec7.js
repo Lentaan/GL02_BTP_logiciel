@@ -3,9 +3,15 @@ const cheminFichier = './exam2.gift';
 const exam3 = newParser(cheminFichier);
 console.log(exam3);*/
 
+//const newParser = require('./newParser');
+const parsfile = require('./parsfile');
 const parser = require('./parser.js');//parser pour tous les exams
 const fs = require('fs');
 const readlineSync = require('readline-sync');
+
+//les 2 fichiers a comparer
+let exam1;
+let exam2;
 
 // Récupérer la liste des fichiers disponibles dans le répertoire
 const files = fs.readdirSync('./SujetB_data'); // Le chemin du répertoire où se trouvent tes fichiers
@@ -21,22 +27,20 @@ const choix1 = readlineSync.questionInt('Choisissez un premier fichier en entran
 
 // Vérifier si le choix est valide
 if (choix1 > 0 && choix1 <= files.length) {
-    const exam1 = files[choix1 - 1];
+    exam1 = files[choix1 - 1];
     console.log(`Vous avez choisi : ${exam1}`);
+    console.log('coucou',exam1);
 
-
-    // Maintenant tu peux utiliser le fichier choisi comme tu le souhaites
-    // Par exemple : fs.readFileSync(fichierChoisi, 'utf-8');
 } else {
     console.log('Choix invalide');
 }
-
+console.log('coucou',exam1);
 // Demander à l'utilisateur de choisir le deuxième fichier
 const choix2 = readlineSync.questionInt('Choisissez un deuxieme fichier en entrant son numéro : ');
 
 // Vérifier si le choix est valide
 if (choix2 > 0 && choix2 <= files.length) {
-    const exam2 = files[choix2 - 1];
+    exam2 = files[choix2 - 1];
     console.log(`Vous avez choisi : ${exam2}`);
 
 
@@ -46,15 +50,40 @@ if (choix2 > 0 && choix2 <= files.length) {
     console.log('Choix invalide');
 }
 
-list_question = parser();
+let questionExam1 = parsfile('./SujetB_data/'+exam1);
+console.log(questionExam1);
 
-// trouver les questions contenues dans le fichier
 
-const questionsFiltrees = list_question.filter(question => {
-    return question.name.includes('EM U5 p34 Voc1');
-});
 
-console.log(questionsFiltrees);
+
+/*list_question = parser();
+console.log(exam1);*/
+
+/*function listQuestionsFile (exam){
+    let questionExam = list_question.filter(exam.nomFichier);
+    return questionExam;
+}*/
+
+/*function listQuestionsFile(exam) {
+    let questionsExam = list_question.filter(question => question.nomFichier === exam);
+    return questionsExam;
+}
+
+
+let questionExam1 = listQuestionsFile(exam1);
+console.log(questionExam1);*/
+
+/*// Filtrer les questions pour afficher uniquement celles ayant le même nomFichier que exam1
+const questionsExam1 = list_question.filter(question => question.nomFichier === exam1);
+
+// Afficher les questions de exam1
+console.log('Questions de', exam1);
+questionsExam1.forEach(question => {
+    console.log(question.toString());
+});*/
+
+
+
 
 
 //console.log(list_question[choix1-1]);

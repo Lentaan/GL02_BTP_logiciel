@@ -7,13 +7,22 @@ const readlineSync = require("readline-sync");
 const isValid = function(file) {
 
     const list = parsfile(file);
-    console.log(list);
+    console.log(list.length);
 
-    return true
+    let bool = false;
+
+    if(list.length >=15 && list.length <= 20){
+        bool = true;
+    }
+
+    return bool;
 
 }
 
-console.log(isValid('./exam/exam1.gift'));
+
+console.log(isValid('SujetB_data/EM-U5-p36_37-Reading.gift'));
+console.log(isValid('./exam/exam2.gift'));
+
 
 
 

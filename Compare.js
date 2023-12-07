@@ -1,4 +1,4 @@
-const parsfile = require('./parsfile'); //appel du parser
+const parserExam = require('./parserExam'); //appel du parser
 const fs = require('fs');
 const readlineSync = require('readline-sync');
 const path = require('path');
@@ -88,10 +88,10 @@ if(choix === 1){
 
 //==============================Parser les fichiers=================================//
 
-let questionExam1 = parsfile(exam1);
+let questionExam1 = parserExam(exam1);
 //console.log(questionExam1);
 
-let questionExam2 = parsfile(exam2);
+let questionExam2 = parserExam(exam2);
 //console.log(questionExam2);
 
 //=============================== Comparaison des questions des fichiers==================================//

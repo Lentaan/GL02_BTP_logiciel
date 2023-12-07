@@ -1,4 +1,4 @@
-const parsfile = require('./parsfile');
+const parserExam = require('./parserExam');
 const fs = require("fs");
 const readlineSync = require("readline-sync");
 
@@ -6,7 +6,7 @@ const readlineSync = require("readline-sync");
 
 const isValid = function(file) {
 
-    const list = parsfile(file);
+    const list = parserExam(file);
     console.log(list.length);
 
     let bool = false;
@@ -51,5 +51,5 @@ const isValid = function(file) {
 }
 
 
-console.log(isValid('SujetB_data/EM-U5-p36_37-Reading.gift'));
-console.log(isValid('./exam/exam2.gift'));
+//console.log(isValid('SujetB_data/EM-U5-p36_37-Reading.gift'));
+//console.log(isValid('./exam/exam2.gift'));

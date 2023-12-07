@@ -1,12 +1,12 @@
 const readlineSync = require("readline-sync");
 const fs = require("fs");
 
-//===============fonction qui crée un fichier vCard contant l'id et le contact de l'enseignant================
+//===============fonction qui crée un fichier vCard contant l'id et le contact de l'utilisateur================
 const createVCard = function () {
-  // récupération de l'id de l'enseignant
+  // récupération de l'id de l'utilisateur
   let id = readlineSync.question("Entrez votre id : ");
 
-  // récupération du contact de l'enseignant
+  // récupération du contact de l'utilisateur
   let contact = readlineSync.question("Entrez votre contact : ");
 
   // création d'une variable qui contient le contenu du fichier vCard

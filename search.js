@@ -1,6 +1,6 @@
 const parser = require("./parser.js");
 const readlineSync = require("readline-sync");
-List_question = parser();
+listQuestion = parser();
 
 //===================fonction qui permet à l'enseignant de rechercher une question ou la choisir dans une liste de questions=======================
 const searchQuestion = function () {
@@ -8,7 +8,7 @@ const searchQuestion = function () {
   let question = readlineSync.question("Entrez votre question : ");
 
   // utilisation de la méthode filter pour créer un nouveau tableau qui contient toutes les questions qui incluent la saisie de l'utilisateur
-  let filteredQuestions = List_question.filter((q) =>
+  let filteredQuestions = listQuestion.filter((q) =>
     q.name.includes(question)
   );
 

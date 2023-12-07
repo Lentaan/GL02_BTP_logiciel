@@ -59,7 +59,24 @@ cli
 			}
 			logger.info(`La question ${args.number} a ete ajoutee`);
 		})
-	})	
+	})
+	
+	//generate vcard file for the teacher containing his number_id and his name and his phone number
+	.command('vcard','generate a vcard file containing information of one teacher')
+	.argument('<id>','the teacher id')
+	.argument('<name>','The teacher name')
+	.argument('<phone>','his phone number')
+	.action(({args,options,logger}) => {
+		let vCard = "BEGIN:VCARD";
+		vCard += "\nVERSION:4.0";
+		vCard += `\nFN:${args.id}`;
+		vCard += `\nNAME:${args.name}`;
+		vCard += `\nEMAIL:${args.phone}`;
+		vCard += "\nEND:VCARD";
+	  
+		// création du fichier vCard
+		fs.writeFileSync(`${args.name}.vcf`, vCard);
+	})
 
 	//simulation de test 
 	.command('compareAnswer',"Compare les reponses d'un etudiant avec la correction d'un exam choisi")

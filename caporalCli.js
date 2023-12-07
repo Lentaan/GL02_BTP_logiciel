@@ -109,6 +109,33 @@ cli
 			logger.info(`vous avez ${note}% de bonne reponse à l'examen. Vous pourrez trouver le compte rendu dans le fichier compte rendu`);
 		})
 	})
+
+
+	//compare a specific exam to another exam
+	.command('compareExam','compare the type of question of an exam ti another exam or to the bank of question')
+	.argument('<exam1>','exam that you want to compare')
+	.argument('<exam2>','exam which is used for comparaison')
+	.action(({args,logger,options}) => {
+		let questionExam1 = parserExam(args.exam1);
+		let questionExam2 = parserExam(args.exam2);
+		//on determine le fichier contenant le plus de question car c'est par ce nombre qu'on va boucler pour comparer les exams
+		let commonQuestion = new Array();
+		for(let i=0; i<questionExam1.length; i++){
+			for(let j=0; j<questionExam2.length; j++){
+				if(questionExam1[i].name === questionExam2[j].name){
+					commonQuestion.push(questionExam1[i]);
+				}
+			}
+		}
+		logger.info(commonQuestion);
+		if(commonQuestion.length > 0){
+			logger.info(`le fichier compte ${commonQuestion.length} de questions en commun`);
+			logger.info(`il s'agit de ${commonQuestion}`);
+		}else{
+			logger.info(`il n'ya pas de questions en commun`);
+		}
+		
+	})
 				
 cli.run(process.argv.slice(2));
 	

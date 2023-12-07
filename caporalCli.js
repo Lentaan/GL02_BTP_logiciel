@@ -2,6 +2,7 @@ const fs = require('fs');
 const colors = require('colors');
 //const VpfParser = require('./VpfParser.js');
 const parser = require('./parser');
+const parserExam = require('./parserExam');
 const listQuestion = parser();
 const readline = require('readline');
 const vg = require('vega');
@@ -11,8 +12,7 @@ const cli = require("@caporal/core").default;
 
 cli
 	.version('vpf-parser-cli')
-	.version('0.07')
-	
+	.version('0.07')	
 	//lister les questions de la banque de question
 	.command('question','List all question in the question bank')
 	.action(({args, options, logger}) => {
@@ -36,17 +36,32 @@ cli
 		})
 	})
 
-	//specification 5 donner les resultats d'un exam
-	.command('compareAnswer',"compare les reponses d'un etudiant au test avec la correction de l'examen")
-	.argument('<answer>',"Fichier de reponse de l'etudiant")
-	.argument('<exam>',"Fichier de l'exam en question")
+	//simulation de test 
+	.command('compareAnswer',"Compare les reponses d'un etudiant avec la correction d'un exam choisi")
+	.argument('<answer>',"fichier contenant les reponses d'un etudiant")
+	.argument('<exam>',"examen compose par l'etudiant")
 	.action(({args,logger,options}) => {
-		fs.readFile(args.answer,'utf-8',(err,data) => {
+		//reponse de l'etudiant
+		fs.readFile(args.answer,"utf-8", (err,data) =>{
 			if(err){
-				logger.info("")
+				logger.info("Le fichier de reponse de l'etudiant est illisible")
 			}
+			answerStudent = data.split(',');
+			//reponse aux questions de l'examen
+			questionExam =parserExam(args.exam);
+			//note a l'examen
+			let note = 0;
+			//numero correspond au nulero de question
+			for(let numero = 0; numero < questionExam.length; numero++){
+				if(answerStudent[numero] === questionExam[numero].answer){
+					note++
+				}
+			}
+			note = note * 20/questionExam.length;
+			logger.info(note);
 		})
 	})
-				
+
+	
 cli.run(process.argv.slice(2));
 	

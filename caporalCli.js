@@ -12,7 +12,8 @@ const cli = require("@caporal/core").default;
 
 cli
 	.version('vpf-parser-cli')
-	.version('0.07')	
+	.version('0.07')
+	
 	//lister les questions de la banque de question
 	.command('question','List all question in the question bank')
 	.action(({args, options, logger}) => {
@@ -61,7 +62,6 @@ cli
 			logger.info(note);
 		})
 	})
-
-	
+				
 cli.run(process.argv.slice(2));
 	

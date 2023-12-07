@@ -7,6 +7,8 @@ const listQuestion = parser();
 const readline = require("readline");
 const vg = require("vega");
 const vegalite = require("vega-lite");
+const search = require("./examSheet.js");
+const listQuestionExam = require("./examSheet.js");
 
 const cli = require("@caporal/core").default;
 
@@ -15,7 +17,7 @@ cli
   .version("0.07")
 
   //lister les questions de la banque de question
-  .command("question", "List all question in the question bank")
+  .command("question", "liste de toutes les questions de la banque de question")
   .action(({ args, options, logger }) => {
     let i = 0;
     for (question in listQuestion) {
@@ -27,9 +29,12 @@ cli
   //search a particular question in the bank of question
   .command(
     "search",
-    "search a queestion in the bank question by typing characters of the entire question"
+    "recherche une question dans la banque de question et retourne son intitulé"
   )
-  .argument("question", "part or the entire question to search")
+  .argument(
+    "question",
+    "partie de la question recherchée ou la question entière"
+  )
   .action(({ args, logger }) => {
     //utilisation de la méthode filter pour créer un nouveau tableau qui contient toutes les questions qui incluent la saisie de l'utilisateur
     let filteredQuestions = listQuestion.filter((q) =>
@@ -52,9 +57,9 @@ cli
   })
 
   //ajouter une question à un examen
-  .command("add", "add a question by his number to a exam file")
-  .argument("<number>", "number of the question")
-  .argument("<file>", "the exam file where the question must be add")
+  .command("add", "ajoute une question à un examen")
+  .argument("<number>", "numéro de la question à ajouter")
+  .argument("<file>", "l'examen auquel ajouter la question")
   .action(({ args, logger }) => {
     fs.appendFile(
       args.file,
@@ -63,7 +68,7 @@ cli
         if (err) {
           logger.info("fichier non existant ou chemin inacessible");
         }
-        logger.info(`La question ${args.number} a ete ajoutee`);
+        logger.info(`La question ${args.number} a été ajoutée`);
       }
     );
   })
@@ -86,13 +91,36 @@ cli
     fs.writeFileSync(`${args.id}.vcf`, vCard);
   })
 
+  //création d'une fiche d'examen
+  .command(
+    "create-exam-sheet",
+    "Création d'une fiche d'examen sous format GIFT"
+  )
+  .argument("<exam>", "Nom de l'examen")
+  .action((args, options, logger) => {
+    // message de bienvenu rappelant le but de la fonctionnalité
+    logger.info(
+      "Bienvenu dans la création d'une fiche d'examen sous format GIFT \n"
+    );
+    // récupération de la liste des questions
+    let questions = listQuestionExam();
+    // création d'une chaine de caractères qui va contenir toutes les questions
+    let giftContent = "";
+    // ajout de chaque question à la chaine de caractères
+    questions.forEach((q) => {
+      giftContent += `${q}\n\n`;
+    });
+    // création du fichier gift
+    fs.writeFileSync(`${args.exam}.gift`, giftContent);
+  })
+
   //simulation de test
   .command(
     "compareAnswer",
-    "Compare les reponses d'un etudiant avec la correction d'un exam choisi et genere un fichier de compte rendu"
+    "Comparer les réponses d'un étudiant avec la correction d'un exam choisi et genere un fichier de compte rendu"
   )
-  .argument("<answer>", "fichier contenant les reponses d'un etudiant")
-  .argument("<exam>", "examen compose par l'etudiant")
+  .argument("<answer>", "fichier contenant les réponses d'un étudiant")
+  .argument("<exam>", "examen composé par l'etudiant")
   .action(({ args, logger }) => {
     //réponse de l'etudiant
     fs.readFile(args.answer, "utf-8", (err, data) => {
@@ -107,10 +135,10 @@ cli
       //chaine de caractere écrit dans le fichier de compte rendu
       let compteRendu = "";
       for (let numero = 0; numero < questionExam.length; numero++) {
-        let appreciation = "wrong";
+        let appreciation = "faux";
         if (answerStudent[numero] === questionExam[numero].answer) {
           note++;
-          appreciation = "right";
+          appreciation = "vrai";
         }
         compteRendu += `question ${numero}: ${appreciation}, correction: ${questionExam[numero].answer}\n`;
       }
@@ -118,7 +146,7 @@ cli
       compteRendu += `vous avez ${note}% de bonne reponse à l'examen`;
       fs.writeFileSync(`compteRendu.txt`, compteRendu);
       logger.info(
-        `vous avez ${note}% de bonne reponse à l'examen. Vous pourrez trouver le compte rendu dans le fichier compte rendu`
+        `vous avez ${note}% de bonne réponse à l'examen. Vous pourrez trouver le compte rendu dans le fichier compte rendu`
       );
     });
   })
@@ -126,10 +154,10 @@ cli
   //comparaison de deux examens
   .command(
     "compareExam",
-    "compare the type of question of an exam ti another exam or to the bank of question"
+    "compare deux examens et retourne le nombre de questions en commun"
   )
-  .argument("<exam1>", "exam that you want to compare")
-  .argument("<exam2>", "exam which is used for comparaison")
+  .argument("<exam1>", "examen que l'on veut comparer")
+  .argument("<exam2>", "examen qui sert de comparaison")
   .action(({ args, logger }) => {
     let questionExam1 = parserExam(args.exam1);
     let questionExam2 = parserExam(args.exam2);
@@ -149,7 +177,7 @@ cli
       );
       logger.info(`il s'agit de ${commonQuestion}`);
     } else {
-      logger.info(`il n'ya pas de questions en commun`);
+      logger.info(`il n'y a pas de questions en commun`);
     }
   });
 

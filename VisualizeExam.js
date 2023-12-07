@@ -38,7 +38,7 @@ programme
                 "data" : {"url" : List_examen[i].dataUrl },
                 "mark" : "bar",
                 "encoding" : { x : {"field" : "type", "type" : "nominal",
-                                              "axis" : { "title" : "Types de questions ' name."}
+                                              "axis" : { "title" : "Types de questions"}
                                             },
                               y : {"field" : "Nombre de questions","aggregate" : "count"}
                                           }           

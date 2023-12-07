@@ -79,7 +79,7 @@ cli
 	})
 
 	//simulation de test 
-	.command('compareAnswer',"Compare les reponses d'un etudiant avec la correction d'un exam choisi")
+	.command('compareAnswer',"Compare les reponses d'un etudiant avec la correction d'un exam choisi et genere un fichier de compte rendu")
 	.argument('<answer>',"fichier contenant les reponses d'un etudiant")
 	.argument('<exam>',"examen compose par l'etudiant")
 	.action(({args,logger,options}) => {
@@ -93,14 +93,20 @@ cli
 			questionExam =parserExam(args.exam);
 			//note a l'examen
 			let note = 0;
-			//numero correspond au nulero de question
+			//chaine de caractere ecrit dans le fichier de compte rendu
+			let compteRendu ="";
 			for(let numero = 0; numero < questionExam.length; numero++){
+				let appreciation ="wrong"
 				if(answerStudent[numero] === questionExam[numero].answer){
-					note++
+					note++;
+					appreciation = "right";
 				}
+				compteRendu += `question ${numero}: ${appreciation}, correction: ${questionExam[numero].answer}\n`
 			}
-			note = note * 20/questionExam.length;
-			logger.info(note);
+			note = (note/questionExam.length)*100;
+			compteRendu += `vous avez ${note}% de bonne reponse à l'examen`;
+			fs.writeFileSync(`compteRendu.txt`, compteRendu);
+			logger.info(`vous avez ${note}% de bonne reponse à l'examen. Vous pourrez trouver le compte rendu dans le fichier compte rendu`);
 		})
 	})
 				

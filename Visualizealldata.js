@@ -9,10 +9,9 @@ const fetch = require('fetch');
 
 programme
     .command('VisualizeAllData','Visualize by a graph all data')
-    .action(
+    .argument('<./SujetB_data>', "All files use to make the graph")
+    .action( ({args,logger,options}) => {
     // si choix des types de questions de toutes les données alors il faut les afficher avec vega
-
-    function() {
         const urls = ['EM-U5-p34-Gra-Expressions_of_quantity.gift', 'EM-U5-p34-Voc.gift','EM-U5-p35-Gra-Subject_verb_agreement.gift',''];
         
         // Fonction pour charger les données depuis une URL
@@ -32,7 +31,7 @@ programme
         const combinedData = datasets.reduce((acc, dataset) => acc.concat(dataset), []);
         combinedData.extract(type);
 
-        var visualizeTypesQuestions ={
+        var visualize ={
             "data" : {"values": combinedData}, 
             "mark" : "bar",
             "encoding" : { x : { "field" : "type", "type" : "nominal", 
@@ -40,7 +39,10 @@ programme
                                 },
                         y : {"field" : "Nombre de questions","aggregate" : "count"}
                             }
-                            }})
+                            }
+        console.log(visualize);
+                        
+                        })
     })
  //exportation de la fonction VisualizeAllData
 programme.run(process.argv.slice(2));

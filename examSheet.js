@@ -77,7 +77,7 @@ const listQuestionExam = function () {
   return questions_exam;
 };
 
-//==========================fonction va créer une fiche d'examen sous format GIFT=======================
+//==========================fonction qui va créer une fiche d'examen sous format GIFT=======================
 const createExamSheet = function () {
   // message de bienvenu rappelant le but de la fonctionnalité
   console.log(

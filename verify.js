@@ -52,4 +52,4 @@ const isValid = function(file) {
 
 
 //console.log(isValid('SujetB_data/EM-U5-p36_37-Reading.gift'));
-//console.log(isValid('./exam/exam2.gift'));
+//console.log(isValid('./exam/exam4.gift'));

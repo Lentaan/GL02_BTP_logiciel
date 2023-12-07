@@ -17,17 +17,41 @@ cli
 	//lister les questions de la banque de question
 	.command('question','List all question in the question bank')
 	.action(({args, options, logger}) => {
-		let i=1;
+		let i=0;
         for(question in listQuestion){
             logger.info("Question n°"+i+": "+listQuestion[i-1]);
             i++;
         }
 	})
 
-	//add a particular question to a file
-	.command('add','add a question by his number to a file')
+
+	//search a particular question in the bank of question
+	.command('search','search a queestion in the bank question by typing characters of the entire question')
+	.argument('question','part or the entire question to search')
+	.action(({args,logger}) => {
+		//utilisation de la méthode filter pour créer un nouveau tableau qui contient toutes les questions qui incluent la saisie de l'utilisateur
+		let filteredQuestions = listQuestion.filter((q) =>
+			q.name.includes(args.question)
+		);
+
+		// utilisation d'une instruction conditionnelle pour vérifier si le tableau filteredQuestions est vide ou non
+		if (filteredQuestions.length === 0) {
+			// si le tableau est vide, cela signifie que la question n'a pas été trouvée, donc on affiche un message d'erreur
+			logger.info(`La saisie ${args.question} n'a pas été trouvée`);
+
+			// si le tableau n'est pas vide, cela signifie que la question a été trouvée
+		} else {
+			// on affiche toutes les questions trouvées
+			logger.info("Voici les questions trouvées : \n");
+			filteredQuestions.forEach((q, index) => {
+			logger.info(`${index + 1}. ${q.name}`);
+			});
+	}})
+
+	//add a particular question to a exam file 
+	.command('add','add a question by his number to a exam file')
 	.argument('<number>','number of the question')
-	.argument('<file>','the file where the question must be add')
+	.argument('<file>','the exam file where the question must be add')
 	.action(({args,logger}) => {
 		fs.appendFile(args.file,listQuestion[parseInt(args.number)].toString(),(err) => {
 			if(err){
@@ -35,7 +59,7 @@ cli
 			}
 			logger.info(`La question ${args.number} a ete ajoutee`);
 		})
-	})
+	})	
 
 	//simulation de test 
 	.command('compareAnswer',"Compare les reponses d'un etudiant avec la correction d'un exam choisi")

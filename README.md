@@ -2,10 +2,10 @@
 
 # Réponse au cahier des charges
 
-Ni de grammaire régulière, ni de spécifications algébriques sont présentes
+Ni de grammaire régulière, ni de spécifications algébriques sont présentes,
 nous nous sommes donc adaptés
 
-La première et troisième fonctionnalités ont été combinées en une seule fonctionnalité
+La première et troisième fonctionnalités ont été combinées en une seule fonctionnalité,
 puisque la troisième fonctionnalité a besoin de la première
 et que l'on trouvait la première toute seule inutile
 
@@ -20,7 +20,7 @@ pour avoir l’ensemble des commandes utilisables
 caporalcli.js <nomdelacommande> --help 
 pour avoir de l'aide sur une commande spécifique
 
-Sans utiliser caporal, pouvez aussi lancer les fichiers js suivants
+Sans utiliser caporal, pouvez aussi lancer les fichiers js suivants :
 examSheet.js (spec_1 et spec_3)
 search.js (spec_2)
 vCard.js (spec_4)
@@ -32,21 +32,27 @@ verify.js (spec_8)
 # Installations nécessaires
 
 Afin d'exécuter les fichiers js
-node.js (disponible sur le site https://nodejs.org/en/download/)
-puis sur votre invite de commande dans le dossier du projet
+
+il faut installer node.js (disponible sur le site https://nodejs.org/en/download/)
+
+puis sur votre invite de commande dans le dossier du projet : 
+
 npm install
+
 npm install readline-sync
 
 Afin d'utiliser le fichier caporal
-sur votre invite de commande dans le dossier du projet
+
+sur votre invite de commande dans le dossier du projet :
+
 npm install caporal
 
 # Données fournies
 
 Les données du sujet B sont fournies
 
-Un dossier exam est fourni
-il contient des fichiers gift
+Un dossier exam est fourni,
+il contient des fichiers gift,
 il permet de tester les fichiers compare.js et verify.js
 
 Deux fichiers gift sont déjà disponibles en dehors du dossier exam

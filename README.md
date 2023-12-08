@@ -14,19 +14,21 @@ et que l'on trouvait la première toute seule inutile
 Vous pouvez choisir de lancer le fichier caporalCli.js
 où toutes les fonctionnalités ont été regoupées sous forme de commandes
 
-Sur votre invite de commande, dans le dossier du projet
+Sur votre invite de commande, dans le dossier du projet :
+
 node caporalcli.js help 
-pour avoir l’ensemble des commandes utilisables 
-caporalcli.js <nomdelacommande> --help 
-pour avoir de l'aide sur une commande spécifique
+(pour avoir l’ensemble des commandes utilisables)
+
+caporalcli.js <nomdelacommande> --help
+(pour avoir de l'aide sur une commande spécifique)
 
 Sans utiliser caporal, pouvez aussi lancer les fichiers js suivants :
-examSheet.js (spec_1 et spec_3)
-search.js (spec_2)
-vCard.js (spec_4)
-simulation.js (spec_5)
-visualization.js (spec_6)
-compare.js (spec_7)
+examSheet.js (spec_1 et spec_3),
+search.js (spec_2),
+vCard.js (spec_4),
+simulation.js (spec_5),
+visualization.js (spec_6),
+compare.js (spec_7),
 verify.js (spec_8)
 
 # Installations nécessaires

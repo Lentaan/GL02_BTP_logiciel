@@ -179,6 +179,78 @@ cli
     } else {
       logger.info(`il n'y a pas de questions en commun`);
     }
-  });
+  })
+
+	.command('VisualizeAllData','Visualize by a graph all data')
+    .argument('<SujetB_data>', "All files use to make the graph")
+    .action( ({args,logger,options}) => {
+    // 
+        const filePaths = args.SujetB_data;
+        
+        // Fonction pour lire les données d'un fichier
+        const readDataFromFile = (filePath) => {
+            const data = JSON.parse(fs.readFileSync(filePath,'UTF-8'));
+            return data;
+        }
+        // Charger les données de chaque fichier
+        const datasets = filePaths.map(filePath => readDataFromFile(filePath));
+
+        // Combinez les jeux de données si nécessaire
+        const combinedData = datasets.reduce((acc, dataset) => acc.concat(dataset), []);
+        
+        // variable pour la visualisation Vega-Lite
+        var visualize ={
+            "data" : {"values": combinedData}, 
+            "mark" : "bar",
+            "encoding" : { x : { "field" : "type", "type" : "nominal", 
+                                "axis": {"title": "Types de questions"}
+                                },
+                        y : {"field" : "Nombre de questions","aggregate" : "count"}
+                            }
+                            }
+        //Afficher le graphique
+        console.log(visualize);
+                        
+    })
+//// fonction qui permet à un enseignant de visualiser le nombre de types de questions présentes dans un examen
+	.command('VisualizeExam', 'Visualize by a graph types of questions of one exam')
+  	.argument('<examen>', 'fichier d examen choisi pour voir le nombre de types de question')
+  	.action( ({args,logger,options}) => {
+  
+    //demander à l'enseignant d'ecrire le nom de l'examen dont il veut voir les types de questions
+        let chooseexamen = readlineSync.question('Entrez le nom de l examen :');
+
+        //variable qui verifie si le nom de l'examen existe ou pas 
+        let nomExamenExiste = false;
+
+        // la boucle for permet de balayer l'ensemble des examens
+         for (let i = 0; i<List_examen.length; i++){  
+
+        // if verifie si l'examen existe 
+            if(List_examen[i].name.includes(chooseexamen)) {
+              nomExamenExiste = true;
+            // Visualisation du nombre de types de questions de l'examen avec Vega-Lite
+              var visualize = {
+                "data" : {"url" : List_examen[i].dataUrl },
+                "mark" : "bar",
+                "encoding" : { x : {"field" : "type", "type" : "nominal",
+                                              "axis" : { "title" : "Types de questions"}
+                                            },
+                              y : {"field" : "Nombre de questions","aggregate" : "count"}
+                                          }           
+                              }
+                console.log(visualize);
+            //Arreter la boucle 
+                break;
+            
+
+            // si pas trouvé le dossier
+            } if (!nomExamenExiste){
+          console.log('Réessaye');
+		  //retour au début
+          return chooseexamen;
+        }
+          
+    }})
 
 cli.run(process.argv.slice(2));

@@ -310,19 +310,22 @@ cli
     "fichier d examen choisi pour voir le nombre de types de question"
   )
   .argument("<nomFichierHtml>", "nom du fichier html")
-  .action(({ args, logger, options }) => {
+  .action(({ args }) => {
     // demande à l'utilisateur d'entrer le nom de l'examen
-    let chooseexamen = readlineSync.question("Entrez le nom de l examen :");
+    let chooseExamen = readlineSync.question("Entrez le nom de l examen :");
     let nomExamenExiste = false;
 
+    // création de la liste des examens
+    let listExamen = SujetB_data;
+
     // parcourt la liste des examens
-    for (let i = 0; i < List_examen.length; i++) {
+    for (let i = 0; i < listExamen.length; i++) {
       // vérifie si le nom de l'examen correspond à l'entrée de l'utilisateur
-      if (List_examen[i].name.includes(chooseexamen)) {
+      if (listExamen[i].name.includes(chooseExamen)) {
         nomExamenExiste = true;
         // crée la spécification vega-lite pour le graphique
         var visualize = {
-          data: { url: List_examen[i].dataUrl },
+          data: { url: listExamen[i].dataUrl },
           mark: "bar",
           encoding: {
             x: {

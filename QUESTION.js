@@ -7,7 +7,7 @@ var QUESTION = function(nm,ans,type){
 
 //Methode tostring retourne la chaine de caractere avec laquelle afficher l'objet question
 QUESTION.prototype.toString = function(){
-	return `${this.name}\n\n`;
+	return `question:${this.name}\n reponse:${this.answer}\n\n`;
 }
 
 

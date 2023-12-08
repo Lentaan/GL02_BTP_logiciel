@@ -2,6 +2,8 @@
 const fs = require("fs");
 const readlineSync = require("readline-sync");
 const cli = require("@caporal/core").default;
+const vl = require("vega-lite");
+const vegaEmbed = require("vega-embed");
 
 // importation des fonctions nécessaires
 const parser = require("./parser");
@@ -243,39 +245,58 @@ cli
   // visualisation des données de tous les fichiers examen sous forme d'histogramme
   .command("visualizeAllData", "visualisation de toutes les données")
   .argument("<SujetB_data>", "tous les fichiers de données")
+  .argument("<nomFichierHtml>", "nom du fichier html")
   .action(({ args }) => {
-    // récupère les chemins des fichiers de données
+    // récupération des chemins des fichiers de données
     const filePaths = args.SujetB_data;
 
     // fonction pour lire les données d'un fichier
     const readDataFromFile = (filePath) => {
+      // lecture du fichier et conversion du contenu en objet js
       const data = JSON.parse(fs.readFileSync(filePath, "UTF-8"));
       return data;
     };
-    // charge les données de chaque fichier
+
+    // chargement des données de chaque fichier
     const datasets = filePaths.map((filePath) => readDataFromFile(filePath));
 
-    // combine les jeux de données si nécessaire
+    // combinaison des jeux de données
     const combinedData = datasets.reduce(
       (acc, dataset) => acc.concat(dataset),
       []
     );
 
-    // variable pour la visualisation vega-lite
-    var visualize = {
-      data: { values: combinedData },
-      mark: "bar",
-      encoding: {
-        x: {
-          field: "type",
-          type: "nominal",
-          axis: { title: "Types de questions" },
-        },
-        y: { field: "Nombre de questions", aggregate: "count" },
-      },
-    };
-    // affiche le graphique
-    console.log(visualize);
+    // création de la spécification vega-lite pour la visualisation
+    var visualize = vl
+      .markBar()
+      .data(combinedData)
+      .encode(
+        vl.x().fieldN("type").title("Types de questions"),
+        vl.y().fieldQ("Nombre de questions").aggregate("count")
+      )
+      .toJSON();
+
+    // génére du code HTML pour vega-embed
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+      </head>
+      <body>
+        <div id="vis"></div>
+        <script type="text/javascript">
+          var spec = ${visualize};
+          vegaEmbed('#vis', spec);
+        </script>
+      </body>
+      </html>
+    `;
+
+    // écriture du code html dans un fichier
+    fs.writeFileSync(`${args.nomFichierHtml}.html`, html);
   });
 
 cli.run(process.argv.slice(2));

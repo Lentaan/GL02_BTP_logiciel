@@ -1,7 +1,7 @@
 const parser = require("./parser.js");
 const readlineSync = require("readline-sync");
 const fs = require("fs");
-List_question = parser();
+listQuestion = parser();
 
 //==========================fonction qui retourne une question à partir de ce qu'a saisi l'enseignant=======================
 const search = function () {
@@ -10,7 +10,7 @@ const search = function () {
   let question = readlineSync.question("Entrez votre recherche : ");
 
   // question trouvée ou non à l'aide la méthode find
-  let result = List_question.find((q) => q.name.includes(question));
+  let result = listQuestion.find((q) => q.name.includes(question));
 
   // si la question est trouvée, on retourne son intitulé
   if (result) {
@@ -25,7 +25,7 @@ const search = function () {
 //=========================fonction qui retourne une liste regroupant les questions saisies par l'enseignant=======================
 const listQuestionExam = function () {
   // création de liste qui va contenir les questions
-  let questions_exam = Array();
+  let questionsExam = Array();
 
   // création d'une variable question
   let question;
@@ -52,7 +52,7 @@ const listQuestionExam = function () {
 
       // si oui, on l'ajoute à la liste
       if (keepIt.toLowerCase() === "oui") {
-        questions_exam.push(question);
+        questionsExam.push(question);
         console.log("La question a été ajoutée \n");
 
         // sinon elle n'est pas ajoutée, et on demande à l'enseignant d'être plus précis
@@ -74,10 +74,10 @@ const listQuestionExam = function () {
   } while (insert.toLowerCase() === "oui");
 
   // on retourne la liste de questions
-  return questions_exam;
+  return questionsExam;
 };
 
-//==========================fonction va créer une fiche d'examen sous format GIFT=======================
+//==========================fonction qui va créer une fiche d'examen sous format GIFT=======================
 const createExamSheet = function () {
   // message de bienvenu rappelant le but de la fonctionnalité
   console.log(

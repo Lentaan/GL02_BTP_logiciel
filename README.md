@@ -15,8 +15,10 @@ Vous pouvez choisir de lancer le fichier caporalCli.js
 où toutes les fonctionnalités ont été regoupées sous forme de commandes
 
 Sur votre invite de commande, dans le dossier du projet
-node caporalcli.js help pour avoir l’ensemble des commandes utilisables 
-caporalcli.js <nomdelacommande> --help pour avoir de l'aide sur une commande spécifique
+node caporalcli.js help 
+pour avoir l’ensemble des commandes utilisables 
+caporalcli.js <nomdelacommande> --help 
+pour avoir de l'aide sur une commande spécifique
 
 Sans utiliser caporal, pouvez aussi lancer les fichiers js suivants
 examSheet.js (spec_1 et spec_3)
@@ -30,8 +32,7 @@ verify.js (spec_8)
 # Installations nécessaires
 
 Afin d'exécuter les fichiers js
-node.js 
-disponible sur le site https://nodejs.org/en/download/
+node.js (disponible sur le site https://nodejs.org/en/download/)
 puis sur votre invite de commande dans le dossier du projet
 npm install
 npm install readline-sync

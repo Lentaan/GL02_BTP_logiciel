@@ -238,6 +238,44 @@ cli
     } else {
       logger.info(`il n'y a pas de questions en commun`);
     }
+  })
+
+  // visualisation des données de tous les fichiers examen sous forme d'histogramme
+  .command("visualizeAllData", "visualisation de toutes les données")
+  .argument("<SujetB_data>", "tous les fichiers de données")
+  .action(({ args }) => {
+    // récupère les chemins des fichiers de données
+    const filePaths = args.SujetB_data;
+
+    // fonction pour lire les données d'un fichier
+    const readDataFromFile = (filePath) => {
+      const data = JSON.parse(fs.readFileSync(filePath, "UTF-8"));
+      return data;
+    };
+    // charge les données de chaque fichier
+    const datasets = filePaths.map((filePath) => readDataFromFile(filePath));
+
+    // combine les jeux de données si nécessaire
+    const combinedData = datasets.reduce(
+      (acc, dataset) => acc.concat(dataset),
+      []
+    );
+
+    // variable pour la visualisation vega-lite
+    var visualize = {
+      data: { values: combinedData },
+      mark: "bar",
+      encoding: {
+        x: {
+          field: "type",
+          type: "nominal",
+          axis: { title: "Types de questions" },
+        },
+        y: { field: "Nombre de questions", aggregate: "count" },
+      },
+    };
+    // affiche le graphique
+    console.log(visualize);
   });
 
 cli.run(process.argv.slice(2));

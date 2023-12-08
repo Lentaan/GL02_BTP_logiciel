@@ -1,6 +1,7 @@
 const fs = require("fs");
 const colors = require("colors");
 //const VpfParser = require('./VpfParser.js');
+const readlineSync = require("readline-sync");
 const parser = require("./parser");
 const parserExam = require("./parserExam");
 const listQuestion = parser();
@@ -8,7 +9,7 @@ const readline = require("readline");
 const vg = require("vega");
 const vegalite = require("vega-lite");
 const search = require("./examSheet.js");
-const listQuestionExam = require("./examSheet.js");
+const {listQuestionExam} = require("./examSheet.js");
 
 const cli = require("@caporal/core").default;
 
@@ -26,6 +27,8 @@ cli
     }
   })
 
+  
+ 
   //search a particular question in the bank of question
   .command(
     "search",
@@ -56,6 +59,8 @@ cli
     }
   })
 
+  
+ 
   //ajouter une question à un examen
   .command("add", "ajoute une question à un examen")
   .argument("<number>", "numéro de la question à ajouter")
@@ -73,6 +78,8 @@ cli
     );
   })
 
+  
+ 
   //génère un fichier vcf contenant l'id et le contact de l'utilisateur
   .command(
     "vcard",
@@ -91,13 +98,15 @@ cli
     fs.writeFileSync(`${args.id}.vcf`, vCard);
   })
 
+  
+ 
   //création d'une fiche d'examen
   .command(
     "create-exam-sheet",
     "Création d'une fiche d'examen sous format GIFT"
   )
   .argument("<exam>", "Nom de l'examen")
-  .action((args, options, logger) => {
+  .action(({args, options, logger}) => {
     // message de bienvenu rappelant le but de la fonctionnalité
     logger.info(
       "Bienvenu dans la création d'une fiche d'examen sous format GIFT \n"

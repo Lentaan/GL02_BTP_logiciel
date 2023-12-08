@@ -8,9 +8,7 @@ const searchQuestion = function () {
   let question = readlineSync.question("Entrez votre question : ");
 
   // utilisation de la méthode filter pour créer un nouveau tableau qui contient toutes les questions qui incluent la saisie de l'utilisateur
-  let filteredQuestions = listQuestion.filter((q) =>
-    q.name.includes(question)
-  );
+  let filteredQuestions = listQuestion.filter((q) => q.name.includes(question));
 
   // utilisation d'une instruction conditionnelle pour vérifier si le tableau filteredQuestions est vide ou non
   if (filteredQuestions.length === 0) {
@@ -38,5 +36,5 @@ const searchQuestion = function () {
   }
 };
 
-// exportation de la fonction searchQuestion
-module.exports = searchQuestion;
+// appel de la fonction searchQuestion
+searchQuestion();

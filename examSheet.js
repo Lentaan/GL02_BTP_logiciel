@@ -97,4 +97,8 @@ const createExamSheet = function () {
   fs.writeFileSync(`${fileName}.gift`, giftContent);
 };
 
-module.exports = { search, listQuestionExam, createExamSheet };
+// exportation des fonctions search et listQuestionExam
+module.exports = { search, listQuestionExam };
+
+// appel de la fonction createExamSheet
+createExamSheet();

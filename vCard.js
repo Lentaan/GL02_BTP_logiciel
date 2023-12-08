@@ -20,5 +20,5 @@ const createVCard = function () {
   fs.writeFileSync(`${id}.vcf`, vCard);
 };
 
-// exportation de la fonction createVCard
-module.exports = createVCard;
+// appel de la fonction createVCard
+createVCard();

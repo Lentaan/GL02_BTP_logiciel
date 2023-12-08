@@ -6,8 +6,8 @@ const cli = require("@caporal/core").default;
 // importation des fonctions nécessaires
 const parser = require("./parser");
 const parserExam = require("./parserExam");
-const search = require("./examSheet.js");
-const listQuestionExam = require("./examSheet.js");
+const {search} = require("./examSheet.js");
+const {listQuestionExam} = require("./examSheet.js");
 
 // récupération de la liste des questions
 const listQuestion = parser();

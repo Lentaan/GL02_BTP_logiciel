@@ -114,6 +114,48 @@ cli
     fs.writeFileSync(`${args.exam}.gift`, giftContent);
   })
 
+
+
+  //simulation2 de test
+	.command('simulate','simulate a exam')
+	.argument('<exam>','the exam that you want to simulate')
+	.action(({args,logger,options}) => {
+
+		let questionExam = parserExam(args.exam);
+		//tableau des reponses utilisateurs
+		let tabAnswer = new Array();
+		logger.info("Vous allez passer le test de l'exam"+args.exam+"\n repondez aux questions en entrant juste une des reponses");
+		//boucle sur les questions et recupere les reponses de l'utilisateur
+		for (let i = 0; i < questionExam.length; i++) {
+			logger.info(`${questionExam[i].name}: `)
+			let answer = readlineSync.prompt();
+			logger.info("Votre réponse est " + answer);
+			tabAnswer.push(answer);
+		}
+		//------------------construction du fichier de compte rendu de l'examen------------------------
+		//chaine de caractere ecrit dans le fichier de compte rendu
+		let compteRendu ="";
+		//on compare les entrees de l'etudiant et la reponse correcte à la question. si c'est vrai on met right sinon wrong
+		let note = 0;
+		for(let numero = 0; numero < questionExam.length; numero++){
+			let appreciation ="wrong"
+			if(tabAnswer[numero] === questionExam[numero].answer){
+				note++;
+				appreciation = "right";
+			}
+			compteRendu += `question ${numero}: ${appreciation}, correction: ${questionExam[numero].answer}\n`
+		}
+		note = (note/questionExam.length)*100;
+		compteRendu += `vous avez ${note}% de bonne reponse à l'examen`;
+		//on recupere le nom du fichier dans lequel l'utilisateur veut avoir son bilan
+		logger.info("Entrer le nom du fichier dans lequel vous voulez lire le compte rendu de l'examen")
+		let fileCompteRendu = readlineSync.prompt();
+		fileCompteRendu =fileCompteRendu+'.txt'
+		fs.writeFileSync(fileCompteRendu, compteRendu);
+		logger.info(`vous avez ${note}% de bonne reponse à l'examen. Vous pourrez trouver le compte rendu dans le fichier ${fileCompteRendu}`);
+				
+	})
+
   //simulation de test
   .command(
     "compareAnswer",

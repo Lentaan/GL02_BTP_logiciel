@@ -2,8 +2,6 @@
 const fs = require("fs");
 const readlineSync = require("readline-sync");
 const cli = require("@caporal/core").default;
-const vl = require("vega-lite");
-const vegaEmbed = require("vega-embed");
 
 // importation des fonctions nécessaires
 const parser = require("./parser");
@@ -120,7 +118,7 @@ cli
     fs.writeFileSync(`${args.exam}.gift`, giftContent);
   })
 
-  // première simulation de test
+  // simulation de test dans laquelle l'utilisateur répond aux questions de l'examen
   .command("simulate", "simuler un examen")
   .argument("<exam>", "l'examen à simuler")
   .argument(
@@ -165,7 +163,7 @@ cli
     );
   })
 
-  // deuxième simulation de test
+  // simulation de test avec un fichier contenant les réponses d'un étudiant
   .command(
     "compareAnswer",
     "compare les réponses d'un étudiant avec la correction d'un exam choisi et génère un fichier de compte rendu"
@@ -267,16 +265,20 @@ cli
     );
 
     // création de la spécification vega-lite pour la visualisation
-    var visualize = vl
-      .markBar()
-      .data(combinedData)
-      .encode(
-        vl.x().fieldN("type").title("Types de questions"),
-        vl.y().fieldQ("Nombre de questions").aggregate("count")
-      )
-      .toJSON();
+    var visualize = {
+      data: { values: combinedData },
+      mark: "bar",
+      encoding: {
+        x: {
+          field: "type",
+          type: "nominal",
+          axis: { title: "Types de questions" },
+        },
+        y: { field: "Nombre de questions", aggregate: "count" },
+      },
+    };
 
-    // génére du code HTML pour vega-embed
+    // génére du code html pour vega-embed
     const html = `
       <!DOCTYPE html>
       <html>
@@ -288,7 +290,7 @@ cli
       <body>
         <div id="vis"></div>
         <script type="text/javascript">
-          var spec = ${visualize};
+          var spec = ${JSON.stringify(visualize)};
           vegaEmbed('#vis', spec);
         </script>
       </body>
@@ -297,6 +299,73 @@ cli
 
     // écriture du code html dans un fichier
     fs.writeFileSync(`${args.nomFichierHtml}.html`, html);
+  })
+
+  // visualisation des données d'un fichier examen sous forme d'histogramme
+  .command(
+    "VisualizeExam",
+    "Visualize by a graph types of questions of one exam"
+  )
+  .argument(
+    "<examen>",
+    "fichier d examen choisi pour voir le nombre de types de question"
+  )
+  .argument("<nomFichierHtml>", "nom du fichier html")
+  .action(({ args, logger, options }) => {
+    // demande à l'utilisateur d'entrer le nom de l'examen
+    let chooseexamen = readlineSync.question("Entrez le nom de l examen :");
+    let nomExamenExiste = false;
+
+    // parcourt la liste des examens
+    for (let i = 0; i < List_examen.length; i++) {
+      // vérifie si le nom de l'examen correspond à l'entrée de l'utilisateur
+      if (List_examen[i].name.includes(chooseexamen)) {
+        nomExamenExiste = true;
+        // crée la spécification vega-lite pour le graphique
+        var visualize = {
+          data: { url: List_examen[i].dataUrl },
+          mark: "bar",
+          encoding: {
+            x: {
+              field: "type",
+              type: "nominal",
+              axis: { title: "Types de questions" },
+            },
+            y: { field: "Nombre de questions", aggregate: "count" },
+          },
+        };
+        // génère du code html pour vega-embed
+        const html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+          <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+          <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+        </head>
+        <body>
+          <div id="vis"></div>
+          <script type="text/javascript">
+            // insère la spécification vega-lite dans le code HTML
+            var spec = ${JSON.stringify(visualize)};
+            vegaEmbed('#vis', spec);
+          </script>
+        </body>
+        </html>
+      `;
+
+        // écrit le code html dans un fichier
+        fs.writeFileSync(`${args.nomFichierHtml}.html`, html);
+        break;
+      }
+    }
+
+    // si aucun examen ne correspond à l'entrée de l'utilisateur, on lui demande de réessayer
+    if (!nomExamenExiste) {
+      console.log("réessaye");
+      return chooseexamen;
+    }
   });
 
+// exécution de la commande avec les arguments passés dans le terminal
 cli.run(process.argv.slice(2));

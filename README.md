@@ -62,6 +62,6 @@ Deux fichiers gift sont déjà disponibles en dehors du dossier exam
 Un fichier txt est fourni afin de réaliser une simulation à partir de réponses fournies
 
 # Document de recette :
-[Lien du google doc](https://docs.google.com/document/d/1yOD7uhVdPGeEd10n_K5NKPxPIvq6J2dLdRVHwqWv7jk/edit?usp=sharing)https://docs.google.com/document/d/1yOD7uhVdPGeEd10n_K5NKPxPIvq6J2dLdRVHwqWv7jk/edit?usp=sharing
+[Lien du google doc](https://docs.google.com/document/d/1yOD7uhVdPGeEd10n_K5NKPxPIvq6J2dLdRVHwqWv7jk/edit?usp=sharing)
 
 
